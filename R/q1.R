@@ -1,7 +1,5 @@
 library(ggplot2)
 
-library(ggplot2)
-
 # Generate some sample data
 set.seed(123)
 x <- 1:20
