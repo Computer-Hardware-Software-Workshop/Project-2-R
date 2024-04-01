@@ -25,13 +25,7 @@ jobs:
         env: 
           repo_token: ${{ secrets.GITHUB_TOKEN }} 
         run: |
-          R -e '
-            # Load ggplot2 library
-            library(ggplot2)
-            
-            # Your R code here
-            ...
-          '
+          R -e 'renv::run("./R/q1.R")'
           # Add picture
           cml-publish linear_regression_plot.png --md > report.md 
           # Send report
