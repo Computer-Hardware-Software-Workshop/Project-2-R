@@ -1,0 +1,38 @@
+name: linear_regression
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml:latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: '4.x'
+          
+      - name: Install ggplot2
+        run: |
+          R -e 'install.packages("ggplot2")'
+      
+      - name: Setup dependencies
+        run: |
+          R -e 'install.packages("renv")' 
+          R -e 'renv::restore()'
+          
+      - name: Analyze some penguin beaks
+        env: 
+          repo_token: ${{ secrets.GITHUB_TOKEN }} 
+        run: |
+          R -e '
+            # Load ggplot2 library
+            library(ggplot2)
+            
+            # Your R code here
+            ...
+          '
+          # Add picture
+          cml-publish linear_regression_plot.png --md > report.md 
+          # Send report
+          cml-send-comment report.md
