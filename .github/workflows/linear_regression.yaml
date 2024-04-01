@@ -1,0 +1,26 @@
+name: linear_regression
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml:latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup R
+        uses: r-lib/actions/setup-r@master
+        
+      - name: Setup dependencies
+        run: |
+          R -e 'install.packages("renv")' 
+          R -e 'renv::restore()'
+          
+      - name: Creating linear regression model
+        env: 
+          repo_token: ${{ secrets.GITHUB_TOKEN }} 
+        run: |
+          R -e 'renv::run("R/q1.R")'
+          # Add picture
+          cml-publish linear_regression_plot.png --md > report.md 
+          # Send report
+          cml-send-comment report.md
