@@ -1,3 +1,7 @@
+library(ggplot2)
+
+library(ggplot2)
+
 # Generate some sample data
 set.seed(123)
 x <- 1:20
@@ -25,16 +29,28 @@ coefficients <- linear_regression(x, y)
 # Make predictions
 predictions <- coefficients[1] + coefficients[2] * x
 
-# Plot the data and the regression line
-plot(x, y, main = "Linear Regression", xlab = "X", ylab = "Y")
-abline(coefficients[1], coefficients[2], col = "red")
+# Create a data frame with x, y, and predictions
+plot_data <- data.frame(x = x, y = y, predictions = predictions)
 
-# Add points for predicted values
-points(x, predictions, col = "blue", pch = 2)
+# Create a scatter plot with points for data and the regression line
+px <- ggplot(data = plot_data, aes(x = x, y = y)) +
+  geom_point(color = "black") +  # Data points
+  geom_smooth(method = "lm", formula = y ~ x, color = "red", se = FALSE) +  # Regression line
+  geom_point(aes(y = predictions), color = "blue", shape = 2) +  # Predicted values
+  labs(x = "X", y = "Y", title = "Linear Regression") +
+  theme_classic() +
+  theme(text = element_text(size = 12)) +
+  scale_color_manual(name = "Legend",
+                     values = c("black", "red", "blue"),
+                     labels = c("Data Points", "Regression Line", "Predicted Values")) +
+  guides(color = guide_legend(override.aes = list(linetype = c(NA, 1, NA), shape = c(1, NA, 2))))
 
-# Legend
-legend("topleft", legend = c("Data Points", "Regression Line", "Predicted Values"),
-       col = c("black", "red", "blue"), pch = c(1, NA, 2), lty = c(NA, 1, NA))
+# Save the plot as an image file
+ggsave("linear_regression_plot.png", px, width = 6, height = 4, dpi = 300)
+
+# Display the plot
+print(px)
+
 
 # Print coefficients
 cat("Intercept (beta0):", coefficients[1], "\n")
