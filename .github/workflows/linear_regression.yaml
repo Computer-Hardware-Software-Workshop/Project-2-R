@@ -26,4 +26,4 @@ jobs:
         run: |
           R -e 'renv::run("./R/q1.R")'
           # Add picture
-          cml comment create --body "![inline](./linear_regression_plot.png)"
+          cml comment create --body "![inline](./linear_regression_plot.png)" --publish
