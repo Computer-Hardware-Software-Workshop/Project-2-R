@@ -46,7 +46,7 @@ px <- ggplot(data = plot_data, aes(x = x, y = y)) +
 px
 
 # Save the plot as an image file
-ggsave("linear_regression_plot.png", px, width = 6, height = 4, dpi = 300)
+ggsave("linear_regression_plot.png", px, device = "png", width=3,height=1.5,dpi=300)
 
 # Display the plot
 print(px)
