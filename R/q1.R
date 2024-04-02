@@ -1,4 +1,5 @@
 library(ggplot2)
+library(httr)
 
 # Generate some sample data
 set.seed(123)
@@ -49,7 +50,6 @@ ggsave("linear_regression_plot.png", px, width = 6, height = 4, dpi = 300)
 # Display the plot
 print(px)
 
-
 # Print coefficients
 cat("Intercept (beta0):", coefficients[1], "\n")
 cat("Slope (beta1):", coefficients[2], "\n")
@@ -71,3 +71,21 @@ ss_total <- sum((y - mean(y))^2)
 ss_residual <- sum((y - predictions)^2)
 r_squared <- 1 - (ss_residual / ss_total)
 cat("R-squared:", r_squared, "\n")
+
+# Authenticate requests with Personal Access Token (PAT)
+gh_token <- "YOUR_PAT"  # Replace 'YOUR_PAT' with your actual personal access token
+
+# Make authenticated requests by including token in the headers
+headers <- add_headers("Authorization" = paste("token", gh_token))
+
+# Make the request to check rate limit
+response <- GET("https://api.github.com/rate_limit", headers = headers)
+
+# Check if the request was successful
+if (http_type(response) == "application/json") {
+  rate_limit_info <- content(response)
+  cat("Rate limit remaining:", rate_limit_info$rate$remaining, "\n")
+  cat("Rate limit reset time:", as.POSIXct(rate_limit_info$rate$reset, origin = "1970-01-01"), "\n")
+} else {
+  cat("Error:", http_status(response), "\n")
+}
