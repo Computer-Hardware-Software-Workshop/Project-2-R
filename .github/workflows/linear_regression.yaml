@@ -26,7 +26,7 @@ jobs:
         run: |
           R -e 'renv::run("./R/q1.R")'
           # Add picture
-          echo '![](./linear_regression_plot.png "Linear Regression Plot")' >> report.md
+          echo '![](../linear_regression_plot.png "Linear Regression Plot")' >> report.md
 
           # Create CML report
           cml comment create --target=commit --publish=true report.md
