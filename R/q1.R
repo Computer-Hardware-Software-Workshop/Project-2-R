@@ -43,6 +43,7 @@ px <- ggplot(data = plot_data, aes(x = x, y = y)) +
                      values = c("black", "red", "blue"),
                      labels = c("Data Points", "Regression Line", "Predicted Values")) +
   guides(color = guide_legend(override.aes = list(linetype = c(NA, 1, NA), shape = c(1, NA, 2))))
+px
 
 # Save the plot as an image file
 ggsave("linear_regression_plot.png", px, width = 6, height = 4, dpi = 300)

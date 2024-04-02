@@ -58,7 +58,7 @@ px <- ggplot(titanic, aes(x = Age, fill = factor(Survived))) +
        x = "Age",
        y = "Count") +
   theme_minimal()
-
+px
 # Save the plot as an image file
 ggsave("survival_distribution_plot.png", px, width = 6, height = 4, dpi = 300)
 

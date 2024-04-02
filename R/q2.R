@@ -52,7 +52,7 @@ px <- ggplot(data = plot_data, aes(x = x, y = y)) +
   labs(x = "X", y = "Probability", title = "Logistic Regression Example") +
   theme_classic() +
   theme(text = element_text(size = 12))
-
+px
 # Save the plot as an image file
 ggsave("logistic_regression_plot.png", px, width = 6, height = 4, dpi = 300)
 
